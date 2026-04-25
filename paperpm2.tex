@@ -1,0 +1,265 @@
+\documentclass[conference]{IEEEtran}
+\IEEEoverridecommandlockouts
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage[table]{xcolor}
+\usepackage{enumitem}
+\usepackage{cite}
+\usepackage{hyperref}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+
+% Decimales con coma (estilo español)
+\decimalpoint
+
+\begin{document}
+
+% ─────────────────────────────────────────────
+% TÍTULO — Estructura: Objeto + Método + Aplicación
+% Objeto:    Pulidora horizontal de arroz a escala de laboratorio
+% Método:    Simulación DEM con modelo PRM-Tavares
+% Aplicación: Predicción de rotura de grano
+% ─────────────────────────────────────────────
+\title{Simulación DEM-PRM con Modelo de Tavares para la Predicción de Rotura de Grano de Arroz en una Pulidora Horizontal Instrumentada de Escala de Laboratorio}
+
+\author{
+\IEEEauthorblockN{Nombre del Autor\IEEEauthorrefmark{1}, Nombre del Coautor\IEEEauthorrefmark{1}}
+\IEEEauthorblockA{\IEEEauthorrefmark{1}Departamento de [Nombre], Universidad [Nombre], Ciudad, País\\
+Autor de correspondencia: correo@universidad.edu}
+}
+
+\maketitle
+
+% ─────────────────────────────────────────────
+% ABSTRACT — Estructura del Dr. Inga (5 partes):
+% (1) Contexto  (2) Objetivo  (3) Metodología
+% (4) Resultados clave  (5) Conclusión y aporte
+% ─────────────────────────────────────────────
+\begin{abstract}
+% (1) CONTEXTO
+La rotura de grano durante el blanqueado del arroz constituye una de las pérdidas de calidad más significativas en el procesamiento poscosecha, afectando directamente el rendimiento del molino y el valor comercial del producto. Si bien estudios previos de simulación han abordado la rotura en molinos verticales industriales, no se ha reportado en la literatura ningún modelo numérico para pulidoras horizontales abrasivas a escala de laboratorio, equipo cada vez más representativo de operaciones de pequeña y mediana capacidad.
+% (2) OBJETIVO
+Este trabajo desarrolla y valida experimentalmente una simulación basada en el Método de Elementos Discretos (DEM) de la rotura del grano de arroz en una pulidora horizontal instrumentada de escala de laboratorio con cribas perforadas y control inalámbrico de parámetros operativos.
+% (3) METODOLOGÍA
+Se implementó el Modelo de Reemplazo de Partículas (PRM) con el criterio de rotura de Tavares en Ansys Rocky DEM, incorporando el mecanismo de acumulación de daño por cargas repetidas de baja energía característico del blanqueado abrasivo. Los parámetros del modelo —energía específica de fractura mediana ($E_{50}$), coeficiente de acumulación de daño ($\alpha$) y distribución de tamaño de fragmentos hijos— se determinaron mediante ensayos de compresión uniaxial individual y ensayos de impactos repetidos sobre granos de arroz cargo. La velocidad de los rodillos, el espacio rodillo--criba y la velocidad angular del rodillo blanqueador se trataron como variables operativas independientes.
+% (4) RESULTADOS CLAVE
+El modelo propuesto predijo la tasa de rotura y la distribución de tamaño de partícula (PSD) del producto con un error medio absoluto inferior al [X]\%, y reprodujo la tendencia experimental al aumentar la velocidad del rodillo y disminuir el espacio rodillo--criba.
+% (5) CONCLUSIÓN Y APORTE
+Los resultados demuestran la viabilidad de la simulación DEM-PRM como herramienta de análisis y optimización de procesos para sistemas de blanqueado horizontal de arroz, proporcionando un marco metodológico aplicable a futuros estudios de optimización en sistemas de procesamiento de arroz a pequeña escala.
+\end{abstract}
+
+\begin{IEEEkeywords}
+Método de Elementos Discretos, Modelo de Reemplazo de Partículas, modelo de Tavares, rotura de arroz, pulidora horizontal, blanqueado abrasivo, acumulación de daño, simulación de procesos.
+\end{IEEEkeywords}
+
+% ─────────────────────────────────────────────
+% INTRODUCCIÓN — 5 párrafos según estructura del Dr. Inga
+% Párrafo 1: Contexto y relevancia global
+% Párrafo 2: Estado del arte (con referencias)
+% Párrafo 3: Limitaciones identificadas
+% Párrafo 4: Objetivo del artículo
+% Párrafo 5: Contribuciones y organización del paper
+% ─────────────────────────────────────────────
+\section{Introducción}
+
+% ────── PÁRRAFO 1: Contexto y relevancia global ──────
+El arroz (\textit{Oryza sativa} L.) es uno de los cultivos básicos más importantes a nivel mundial y constituye la principal fuente calórica para más de la mitad de la población global. El proceso de molienda, que comprende el descascarado y el blanqueado, es un paso poscosecha crítico que determina la calidad nutricional, la apariencia y el valor económico del producto final \cite{afzalinia2002}. Entre todas las etapas de procesamiento, la rotura del grano durante el blanqueado representa la fuente económicamente más significativa de pérdida del producto, ya que el arroz partido se comercializa a precios sustancialmente menores que el grano entero. Reducir la rotura mediante el control preciso de los parámetros operativos del blanqueador es, por lo tanto, un objetivo de alto impacto científico e industrial.
+
+% ────── PÁRRAFO 2: Estado del arte (con referencias) ──────
+El Método de Elementos Discretos (DEM) ha emergido como una herramienta de simulación adecuada para analizar la dinámica a escala de partícula en equipos de procesamiento granular. Para representar la rotura, se han desarrollado dos enfoques principales: el Modelo de Partículas Bondeadas (BPM) y el Modelo de Reemplazo de Partículas (PRM). Jiménez-Herrera et al. \cite{jimenez2018} compararon sistemáticamente ambos enfoques y concluyeron que el PRM con criterios basados en energía ofrece un balance adecuado entre precisión física y costo computacional para poblaciones grandes de partículas. Tavares y King \cite{tavares1998} extendieron el PRM al introducir un mecanismo de acumulación de daño basado en mecánica del daño continuo, lo que permite simular la fractura por cargas repetidas de baja energía. Más recientemente, Chiaravalle et al. \cite{chiaravalle2025} aplicaron el modelo de Tavares calibrado a la molienda continua de maíz en un molino de martillos, prediciendo con éxito la PSD del producto y el consumo de potencia. En el contexto del arroz, Cao et al. \cite{cao2022} desarrollaron una simulación DEM-PRM de un molino de arroz vertical industrial, y Han et al. \cite{han2021} caracterizaron experimentalmente las propiedades mecánicas del grano relevantes para la calibración DEM.
+
+% ────── PÁRRAFO 3: Limitaciones identificadas (la BRECHA) ──────
+A pesar de los avances reseñados, persisten tres limitaciones relevantes en la literatura. Primero, los estudios DEM publicados sobre blanqueado de arroz se han centrado exclusivamente en configuraciones verticales a escala industrial, dejando sin caracterizar la dinámica de rotura en pulidoras horizontales con cribas perforadas, geometría dominante en las operaciones de pequeña y mediana escala. Segundo, no se ha reportado una calibración del modelo de Tavares para grano de arroz cargo que incluya la determinación experimental del coeficiente de acumulación de daño $\alpha$ asociado a cargas repetidas de baja energía, mecanismo dominante en el blanqueado abrasivo. Tercero, los trabajos existentes no consideran el comportamiento del proceso bajo variación independiente y controlada de los parámetros operativos —velocidad de rodillo, espacio rodillo--criba y velocidad angular del blanqueador— condición necesaria para el desarrollo de estrategias de optimización paramétrica. La presente investigación aborda simultáneamente estas tres limitaciones.
+
+% ────── PÁRRAFO 4: Objetivo del artículo ──────
+El objetivo del presente trabajo es desarrollar y validar experimentalmente un modelo DEM-PRM con criterio de rotura de Tavares para predecir la tasa de rotura y la distribución de tamaño de partícula del producto en una pulidora horizontal abrasiva instrumentada de escala de laboratorio, con control inalámbrico independiente de los principales parámetros operativos del proceso.
+
+% ────── PÁRRAFO 5: Contribuciones y organización del paper ──────
+Las contribuciones específicas de este trabajo son: (i) la primera simulación DEM-PRM publicada de rotura de grano en una pulidora horizontal abrasiva de escala de laboratorio; (ii) la primera calibración del modelo de Tavares para grano de arroz cargo, incluyendo la determinación experimental del coeficiente de acumulación de daño $\alpha$; y (iii) la validación experimental del modelo bajo variación independiente de los parámetros operativos del equipo. El resto del artículo se organiza de la siguiente manera. La Sección~II presenta el marco teórico del modelo de Tavares y la formulación matemática de la rotura por acumulación de daño. La Sección~III describe la pulidora instrumentada (objeto), el procedimiento de calibración del modelo (método) y el diseño experimental de validación (aplicación). La Sección~IV discute los resultados esperados y la Sección~V resume las conclusiones del trabajo.
+
+% ─────────────────────────────────────────────
+% MARCO TEÓRICO
+% ─────────────────────────────────────────────
+\section{Marco Teórico}
+
+\subsection{Mecanismo de Rotura por Acumulación de Daño}
+La rotura del grano de arroz durante el blanqueado abrasivo ocurre principalmente por el efecto acumulado de múltiples eventos de fricción de baja energía entre el grano, el rodillo abrasivo y la criba perforada. A diferencia de la fractura por impacto único, este mecanismo se caracteriza por la presencia de una energía umbral por debajo de la cual cada evento individual no causa fractura, pero el efecto acumulativo de múltiples eventos debilita progresivamente al grano hasta que la fractura ocurre.
+
+\subsection{Modelo de Tavares en el Marco PRM}
+En el modelo de Tavares \cite{tavares1998}, la probabilidad de rotura se describe mediante una distribución log-normal truncada superiormente:
+\begin{equation}
+P(E^{*}) = \Phi\!\left(\frac{\ln E^{*} - \ln E_{50}}{\sigma}\right)
+\label{eq:prob}
+\end{equation}
+\noindent donde $E^{*}$ es la energía específica de conminución, $E_{50}$ es la mediana de la energía específica de fractura, $\sigma^{2}$ es la varianza, y $\Phi$ es la función de distribución acumulada normal estándar.
+
+La dependencia con el tamaño de partícula se modela mediante:
+\begin{equation}
+E_{50}(d) = E_{\infty}\left(1 + \frac{d_{0}}{d}\right)^{\phi}
+\label{eq:e50}
+\end{equation}
+\noindent donde $E_{\infty}$, $d_{0}$ y $\phi$ son parámetros ajustados a datos experimentales.
+
+El mecanismo de acumulación de daño reduce la energía efectiva de fractura tras cada evento sub-umbral:
+\begin{equation}
+E_{50,\,i+1} = E_{50,\,i}\left(1 - \alpha\,\frac{E_{i}}{E_{50,\,i}}\right)
+\label{eq:dano}
+\end{equation}
+\noindent siendo $\alpha$ el coeficiente de acumulación de daño, parámetro central que captura la susceptibilidad del grano a debilitarse bajo cargas repetidas \cite{rocky2024}. Esta capacidad hace al modelo particularmente adecuado para el blanqueado abrasivo, donde la acumulación de daño es el mecanismo dominante \cite{chiaravalle2025}.
+
+% ─────────────────────────────────────────────
+% METODOLOGÍA — Estructura: Objeto + Método + Aplicación
+% (según organización del Dr. Inga)
+% ─────────────────────────────────────────────
+\section{Metodología}
+
+% ════════════════════════════════════
+% (A) OBJETO — Equipo y materiales
+% ════════════════════════════════════
+\subsection{Equipo Experimental: Pulidora Instrumentada (Objeto)}
+La pulidora utilizada en este estudio es un equipo horizontal abrasivo de escala de laboratorio desarrollado en [Nombre de la Universidad]. La máquina está integrada por: (i)~un par de rodillos de descascarado con velocidad diferencial controlable mediante una aplicación móvil sobre red inalámbrica WiFi; (ii)~un mecanismo de ajuste del espacio entre rodillos accionado por un motor paso a paso; (iii)~una cámara de blanqueado conformada por un rodillo abrasivo horizontal rodeado por una criba cilíndrica perforada; y (iv)~un sistema de control de la velocidad angular del rodillo blanqueador desde la misma aplicación móvil. Los parámetros operativos independientes accesibles vía la interfaz de control son:
+
+\begin{itemize}[noitemsep]
+\item Velocidad diferencial de los rodillos de descascarado, $\Delta\omega = \omega_{1} - \omega_{2}$ (rpm).
+\item Espacio radial rodillo--criba, $g$ (mm).
+\item Velocidad angular del rodillo blanqueador, $\omega_{b}$ (rpm).
+\end{itemize}
+
+Esta configuración instrumentada permite la variación sistemática de los parámetros operativos bajo condiciones reproducibles, lo que la hace particularmente adecuada para la validación paramétrica de modelos DEM.
+
+\subsection{Caracterización del Grano de Arroz (Objeto)}
+Se utilizaron granos de arroz cargo de la variedad [Nombre de la Variedad]. La caracterización geométrica se realizó sobre una muestra de $n=50$ granos, midiendo longitud ($l$), ancho ($w$) y espesor ($t$) con un calibrador digital ($\pm 0{,}01$\,mm). La densidad se determinó por desplazamiento de líquido. Los datos morfológicos se utilizaron para definir la geometría de la partícula en Rocky DEM como una aproximación elipsoidal mediante esferas agrupadas (\textit{clumped spheres}).
+
+% ════════════════════════════════════
+% (B) MÉTODO — Calibración y simulación
+% ════════════════════════════════════
+\subsection{Calibración Experimental del Modelo de Tavares (Método)}
+El modelo de Tavares requiere tres conjuntos de parámetros experimentales obtenidos mediante ensayos de partícula individual, siguiendo la metodología descrita por Tavares y King \cite{tavares1998}.
+
+\subsubsection{Ensayo de Compresión Uniaxial}
+Granos individuales de arroz cargo ($n=50$) fueron comprimidos a una velocidad de desplazamiento constante de 1\,mm/min utilizando una máquina universal de ensayos equipada con celda de carga de 50\,N. Se registró la fuerza de fractura de cada grano. La energía específica de fractura $E_{50}$ se calculó a partir de la fuerza de fractura y el área de sección transversal, y la varianza $\sigma^{2}$ se obtuvo de la población de mediciones individuales.
+
+\subsubsection{Ensayo de Impactos Repetidos (Acumulación de Daño)}
+El coeficiente $\alpha$ se determinó mediante un protocolo de impactos repetidos a baja energía. Granos individuales ($n=30$) se sometieron a impactos sucesivos de un peso estandarizado a una energía igual al 30\% de $E_{50}$ medio. Se registró el número de impactos hasta la fractura. El coeficiente $\alpha$ se obtuvo ajustando la Eq.~\eqref{eq:dano} mediante optimización por mínimos cuadrados implementada en Python 3.11.
+
+\subsubsection{Distribución de Tamaño de Fragmentos Hijos}
+Los fragmentos post-fractura se recolectaron y tamizaron utilizando un juego de tamices estándar (4{,}75; 3{,}35; 2{,}36; 1{,}70; 1{,}18; 0{,}85 y 0{,}60\,mm). Las distribuciones obtenidas se ajustaron al modelo de la Función Beta Incompleta disponible en Rocky DEM.
+
+\subsection{Calibración de Parámetros de Contacto DEM (Método)}
+Los parámetros de contacto requeridos para la simulación DEM se resumen en la Tabla~\ref{tab:params}. Los coeficientes de fricción se determinaron mediante el ensayo de ángulo de reposo; el coeficiente de restitución se midió mediante ensayos de rebote sobre superficies de acero plano y de criba metálica. Se calibraron tres pares de interacción de materiales: grano--grano, grano--rodillo y grano--criba.
+
+\subsection{Configuración de la Simulación en Ansys Rocky (Método)}
+La geometría de la cámara de blanqueado —rodillo abrasivo, criba perforada y regiones de entrada y salida— se modeló en software CAD y se importó en Ansys Rocky DEM (versión 2024~R2) como archivos \texttt{.STL}. La rotación del rodillo se definió como movimiento rotacional prescrito a cada velocidad operativa simulada. La criba perforada se reprodujo con el diámetro y paso de perforación reales del equipo de laboratorio. El modelo de rotura de Tavares se habilitó con los parámetros calibrados, y se seleccionó el modelo de fuerza normal de Resorte Lineal Histerético, requisito de la implementación de Tavares en Rocky para garantizar la conservación de energía no viscosa \cite{rocky2024}. Las simulaciones se ejecutaron por un tiempo físico de [X]\,s, correspondiente a la operación en régimen permanente, en una estación de trabajo con aceleración por GPU.
+
+% ════════════════════════════════════
+% (C) APLICACIÓN — Validación experimental
+% ════════════════════════════════════
+\subsection{Diseño Experimental de Validación (Aplicación)}
+Los experimentos de validación se realizaron sobre la pulidora de laboratorio en $N=[N]$ combinaciones de parámetros operativos (velocidad de rodillo $\times$ espacio $\times$ velocidad angular del blanqueador), cubriendo el rango operativo del equipo. Para cada condición se procesó un lote de [X]\,g de arroz cargo y el producto se tamizó para obtener la PSD experimental.
+
+\subsection{Métricas de Desempeño (Aplicación)}
+La tasa de rotura se definió como la fracción másica de granos partidos (longitud $<75\%$ de la longitud original del grano) respecto a la masa total del producto. Los resultados simulados y experimentales se compararon utilizando la Raíz del Error Cuadrático Medio (RMSE) y el Error Porcentual Absoluto Medio (MAPE):
+\begin{equation}
+\mathrm{RMSE} = \sqrt{\frac{1}{N}\sum_{i=1}^{N}\left(y_{i}^{\mathrm{sim}}-y_{i}^{\mathrm{exp}}\right)^{2}}
+\label{eq:rmse}
+\end{equation}
+\begin{equation}
+\mathrm{MAPE} = \frac{100\%}{N}\sum_{i=1}^{N}\left|\frac{y_{i}^{\mathrm{sim}}-y_{i}^{\mathrm{exp}}}{y_{i}^{\mathrm{exp}}}\right|
+\label{eq:mape}
+\end{equation}
+
+\subsection{Resumen de Parámetros del Modelo}
+\begin{table*}[t]
+\centering
+\caption{Resumen de parámetros del modelo PRM-Tavares y métodos de calibración correspondientes.}
+\label{tab:params}
+\renewcommand{\arraystretch}{1.2}
+\rowcolors{2}{gray!10}{white}
+\begin{tabular}{L{4.4cm} C{1.8cm} L{3.5cm} L{5.0cm}}
+\toprule
+\textbf{Parámetro} & \textbf{Símbolo} & \textbf{Método de ensayo} & \textbf{Campo de entrada en Rocky} \\
+\midrule
+Energía específica de fractura mediana & $E_{50}$ (J/kg) & Compresión uniaxial individual & Median Specific Fracture Energy \\
+Varianza de la distribución de fractura & $\sigma^{2}$ & Distribución de compresión & Variance ($\phi$) \\
+Coeficiente de acumulación de daño & $\alpha$ & Impactos repetidos (drop weight) & Damage Accumulation \\
+Distribución de fragmentos hijos & PSD$_{\text{prog}}$ & Análisis granulométrico post-fractura & Fragment Size Distribution \\
+Módulo de Young & $E$ (MPa) & Pendiente de compresión & Young's Modulus \\
+Coeficiente de Poisson & $\nu$ & Literatura + ensayo & Poisson's Ratio \\
+Fricción grano--grano & $\mu_{s}^{gg}$ & Ángulo de reposo & Static Friction (g--g) \\
+Fricción grano--criba & $\mu_{s}^{gc}$ & Plano inclinado & Static Friction (g--s) \\
+Coeficiente de restitución & $e$ & Ensayo de rebote & Restitution Coefficient \\
+Parámetros de dependencia con tamaño & $E_{\infty},\,d_{0}$ & Compresión multi-tamaño & Size Dependence (Rocky) \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+% ─────────────────────────────────────────────
+\section{Resultados Esperados y Contribuciones}
+Este estudio aporta los siguientes elementos novedosos a la literatura:
+\begin{enumerate}[noitemsep]
+\item \textbf{Primera simulación DEM-PRM} de la rotura de grano en una pulidora horizontal abrasiva de escala de laboratorio, llenando un vacío en la literatura publicada que se ha enfocado únicamente en equipos verticales de escala industrial.
+\item \textbf{Primera calibración del modelo de Tavares para grano de arroz cargo}, incluyendo la determinación experimental del coeficiente de acumulación de daño $\alpha$ mediante ensayos de impactos repetidos de baja energía.
+\item \textbf{Relación cuantitativa} entre los parámetros operativos controlados de forma independiente (velocidad de rodillo, espacio y velocidad angular) y la tasa de rotura y la PSD del producto, derivada de simulación DEM validada.
+\item \textbf{Marco metodológico} de calibración DEM-PRM para granos de cereales aplicable a futura optimización basada en simulación de sistemas de procesamiento de arroz a pequeña y mediana escala.
+\end{enumerate}
+
+% ─────────────────────────────────────────────
+\section{Revistas Objetivo}
+\begin{table}[h]
+\centering
+\caption{Revistas Q1 candidatas para la postulación.}
+\label{tab:journals}
+\renewcommand{\arraystretch}{1.2}
+\rowcolors{2}{gray!10}{white}
+\begin{tabular}{L{3.0cm} C{1.1cm} C{0.9cm} L{2.2cm}}
+\toprule
+\textbf{Revista} & \textbf{FI (2024)} & \textbf{Cuartil} & \textbf{Estado} \\
+\midrule
+Biosystems Engineering & 6{,}12 & Q1 & Objetivo principal \\
+Computers \& Electronics in Agriculture & 8{,}30 & Q1 & Alternativa \\
+Powder Technology & 5{,}18 & Q1 & Alternativa \\
+Journal of Food Engineering & 4{,}50 & Q1 & Si enfoque alimentario \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% ─────────────────────────────────────────────
+\section*{Referencias}
+\begin{thebibliography}{99}
+
+\bibitem{jimenez2018}
+N. Jiménez-Herrera, G.~K.~P. Barrios y L.~M. Tavares, ``Comparison of breakage models in DEM in simulating impact on particle beds,'' \textit{Advanced Powder Technology}, vol.~29, no.~3, pp.~692--706, 2018.
+
+\bibitem{chiaravalle2025}
+A.~G. Chiaravalle, J. Piña e I.~M. Cotabarren, ``DEM simulation of maize milling in a hammer mill,'' \textit{Powder Technology}, vol.~453, p.~120587, 2025.
+
+\bibitem{tavares1998}
+L.~M. Tavares y R.~P. King, ``Single-particle fracture under impact loading,'' \textit{International Journal of Mineral Processing}, vol.~54, no.~1, pp.~1--28, 1998.
+
+\bibitem{cao2022}
+Y. Cao \textit{et al.}, ``DEM simulation of a vertical rice mill using a particle replacement model,'' \textit{Biosystems Engineering}, vol.~220, pp.~16--29, 2022.
+
+\bibitem{tino2025}
+H. Tino \textit{et al.}, ``Modeling iron ore breakage with the Tavares model and DEM simulation of a laboratory jaw crusher,'' \textit{Chemical Engineering \& Technology}, 2025.
+
+\bibitem{han2021}
+Y. Han \textit{et al.}, ``Breakage characteristics of single rice grain under impact and compression,'' \textit{Journal of Stored Products Research}, vol.~91, p.~101789, 2021.
+
+\bibitem{afzalinia2002}
+S. Afzalinia, M. Shaker y E. Zare, ``Comparison of different rice milling methods,'' en \textit{ASAE/CSAE North-Central Intersectional Meeting}, Saskatoon, Canadá, 2002.
+
+\bibitem{rocky2024}
+ANSYS Inc., \textit{Rocky DEM Technical Manual, Version 2024 R2}. Canonsburg, PA, EE.UU.: ANSYS Inc., 2024.
+
+\end{thebibliography}
+
+\end{document}
