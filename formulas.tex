@@ -1,0 +1,297 @@
+% =============================================
+% SECCIÓN: CÁLCULO DE DISEÑO MECÁNICO DE LA PULIDORA
+% Para integrar al paper IEEEtran principal
+% =============================================
+
+\section{Cálculo de Diseño Mecánico de la Pulidora}
+
+% ───────────────────────────────────────────
+\subsection{Análisis de la Presión de Contacto en los Rodillos de Descascarado}
+
+% ───── (A) ANCHO DE CONTACTO MÍNIMO POR CRITERIO DE ROTURA ─────
+\subsubsection{Ancho mínimo de contacto por criterio de rotura}
+La presión máxima de contacto entre dos cilindros (rodillos) que actúan sobre el grano se modela mediante la teoría de Hertz para contacto lineal:
+\begin{equation}
+P_{\max} = \frac{2F}{\pi\, L\, a}
+\label{eq:pmax}
+\end{equation}
+\noindent donde $F$ es la fuerza aplicada, $L$ la longitud de contacto y $a$ el semiancho de contacto. Para evitar la rotura del grano, el semiancho mínimo se obtiene imponiendo $P_{\max}=\sigma_{\text{fractura}}$:
+\begin{equation}
+a_{\min} = \frac{2F}{\pi\, L\, \sigma_{\text{fractura}}}
+\label{eq:amin}
+\end{equation}
+
+Considerando una resistencia a la fractura del arroz $\sigma_{\text{fractura}} \approx 9{,}5$--$10\ \text{N/mm}^{2}$ (valor de la literatura), una fuerza de operación $F = 100\ \text{N}$ y una longitud de rodillos $L = 8{,}75\ \text{mm}$:
+\begin{equation}
+a_{\min} = \frac{2 \times 100\ \text{N}}{\pi \times 8{,}75 \times 10\ \text{N/mm}^{2}} = 0{,}73\ \text{mm}
+\end{equation}
+
+El ancho de contacto mínimo total resulta:
+\begin{equation}
+\text{Ancho de contacto} = 2 \times 0{,}73 = 1{,}46\ \text{mm}
+\end{equation}
+
+\textit{Si el ancho de contacto real es menor que este valor, la presión superará el límite de fractura y el grano se romperá.}
+
+% ───── (B) ANCHO DE CONTACTO REAL (SEMI-ESPACIO ELÁSTICO) ─────
+\subsubsection{Ancho de contacto real sobre un semi-espacio elástico}
+Para verificar la integridad del grano, se calcula el ancho de contacto real considerando deformación elástica:
+\begin{equation}
+a = \sqrt{\frac{4\, F\, R\, (1 - \nu^{2})}{\pi\, E\, L}}
+\label{eq:a_real}
+\end{equation}
+\noindent donde $R$ es el radio equivalente, $\nu$ el coeficiente de Poisson y $E$ el módulo de Young. Sustituyendo $F = 100\ \text{N}$, $R = 40\ \text{mm}$, $\nu = 0{,}45$, $E = 50\ \text{N/mm}^{2}$ y $L = 8{,}75\ \text{mm}$:
+\begin{equation}
+a = \sqrt{\frac{4 \times 100 \times 40 \times (1 - 0{,}45^{2})}{\pi \times 50 \times 8{,}75}} = \sqrt{9{,}28} = 3{,}05\ \text{mm}
+\end{equation}
+\noindent Por lo tanto, el ancho de contacto real es $2a = 6{,}1\ \text{mm}$.
+
+% ───── (C) PRESIÓN MÁXIMA REAL ─────
+\subsubsection{Presión máxima real}
+\begin{equation}
+P_{\max} = \frac{2 \times 100\ \text{N}}{\pi \times 3{,}05 \times 8{,}75\ \text{mm}} = 2{,}39\ \text{MPa}
+\label{eq:pmax_real}
+\end{equation}
+
+% ───── (D) FACTOR DE CONTACTO PARA DIFERENTES SEPARACIONES ─────
+\subsubsection{Factor adimensional para diferentes separaciones rodillo--grano}
+Se evalúa la relación $a/g$ para distintos espaciamientos $g$ entre rodillos:
+\begin{table}[h!]
+\centering
+\caption{Factor de contacto $a/g$ para distintas separaciones.}
+\label{tab:contacto}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{ccc}
+\toprule
+\textbf{Separación } $g$ & \textbf{Cálculo} & \textbf{Factor } $a/g$ \\
+\midrule
+5\,mm  & $3{,}05/5$  & $0{,}610$ \\
+10\,mm & $3{,}05/10$ & $0{,}305$ \\
+20\,mm & $3{,}05/20$ & $0{,}152$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% ───────────────────────────────────────────
+\subsection{Velocidad de los Rodillos de Descascarado}
+
+% ───── (A) VELOCIDAD DEL RODILLO RÁPIDO ─────
+\subsubsection{Velocidad lineal del rodillo rápido}
+La velocidad lineal en la superficie de un rodillo cilíndrico se calcula como:
+\begin{equation}
+V = \omega\, \frac{d}{2}
+\label{eq:vlineal}
+\end{equation}
+
+Con velocidad angular $\omega = 130{,}9\ \text{rad/s}$ y diámetro $d = 0{,}08\ \text{m}$ (radio $0{,}04\ \text{m}$):
+\begin{equation}
+V_{\text{rápido}} = 130{,}9\ \frac{\text{rad}}{\text{s}} \times 0{,}04\ \text{m} = 5{,}236\ \frac{\text{m}}{\text{s}}
+\end{equation}
+
+% ───── (B) VELOCIDAD DEL RODILLO LENTO ─────
+\subsubsection{Velocidad del rodillo lento}
+Manteniendo la relación clásica de descascarado de arroz $V_{\text{rápido}}/V_{\text{lento}} = 1{,}25$:
+\begin{equation}
+V_{\text{lento}} = \frac{V_{\text{rápido}}}{1{,}25} = \frac{5{,}236\ \text{m/s}}{1{,}25} = 4{,}19\ \frac{\text{m}}{\text{s}}
+\end{equation}
+
+\noindent\textbf{Resumen de velocidades:}
+\begin{equation*}
+V_{\text{rápido}} = 5{,}236\ \frac{\text{m}}{\text{s}}, \quad V_{\text{lento}} = 4{,}19\ \frac{\text{m}}{\text{s}}
+\end{equation*}
+
+% ───────────────────────────────────────────
+\subsection{Longitud de los Rodillos a partir del Flujo Másico}
+
+% ───── CÁLCULO DEL FLUJO MÁSICO ─────
+\subsubsection{Cálculo del flujo másico}
+La capacidad de procesamiento se relaciona con el flujo másico a través de:
+\begin{equation}
+C = \dot{m} = A_{\text{flujo}} \cdot V \cdot \rho_{\text{aparente}} \cdot \phi
+\label{eq:flujo}
+\end{equation}
+\noindent donde $\rho_{\text{aparente}} = 560$--$600\ \text{kg/m}^{3}$. Expresando el área de la sección transversal como $A_{\text{flujo}} = L \cdot \Delta d$:
+\begin{equation}
+C = L \cdot \Delta d \cdot V \cdot \rho_{\text{aparente}} \cdot \phi
+\end{equation}
+
+Despejando la longitud del rodillo:
+\begin{equation}
+L = \frac{C}{\Delta d \cdot V \cdot \rho_{\text{aparente}} \cdot \phi}
+\label{eq:Lrodillo}
+\end{equation}
+
+\noindent\textbf{Nomenclatura:}
+\begin{itemize}[noitemsep]
+\item $C$ = capacidad de procesamiento $(\text{kg/s})$
+\item $\dot{m}$ = tasa de flujo másico
+\item $A_{\text{flujo}}$ = área de la sección transversal $(L \cdot \Delta d)$
+\item $V$ = velocidad promedio lineal
+\item $\rho_{\text{aparente}}$ = densidad aparente del arroz cargo $(\text{kg/m}^{3})$
+\item $\phi$ = factor de llenado
+\end{itemize}
+
+Sustituyendo $L = 0{,}05\ \text{m}$, $\Delta d = 0{,}0008\ \text{m}$, $V = 5{,}236\ \text{m/s}$, $\rho_{\text{aparente}} = 580\ \text{kg/m}^{3}$ y $\phi = 0{,}6$:
+\begin{equation}
+C = 0{,}05 \times 0{,}0008 \times 5{,}236 \times 580 \times 0{,}6 = 0{,}073\ \frac{\text{kg}}{\text{s}}
+\end{equation}
+\begin{equation}
+C = 262{,}39\ \frac{\text{kg}}{\text{h}}
+\end{equation}
+
+% ───────────────────────────────────────────
+\subsection{Cálculo de la Potencia y el Torque del Motor}
+
+% ───── (A) FUERZA DE OPERACIÓN POR GRANO ─────
+\subsubsection{Estimación de la fuerza normal}
+La fuerza de operación por grano se obtiene aplicando un factor de seguridad ($FS$) sobre la fuerza de fractura medida experimentalmente:
+\begin{equation}
+F_{\text{operación}} = \frac{F_{\text{fractura}}}{FS}
+\label{eq:Fop}
+\end{equation}
+
+Con $F_{\text{fractura}} = 130\ \text{N}$ y $FS = 6{,}5$:
+\begin{equation}
+F_{\text{operación}} = \frac{130\ \text{N}}{6{,}5} = 20\ \text{N}
+\end{equation}
+
+% ───── (B) NÚMERO DE GRANOS EN CONTACTO ─────
+\subsubsection{Número de granos en contacto simultáneo}
+\begin{equation}
+N_{\text{granos}} = \frac{\text{longitud de los rodillos}}{\text{ancho promedio del grano}}
+\label{eq:Ngranos}
+\end{equation}
+\begin{equation}
+N_{\text{granos}} = \frac{50\ \text{mm}}{2{,}8\ \text{mm}} = 17{,}86 \approx 17\ \text{granos}
+\end{equation}
+
+% ───── (C) FUERZA NORMAL TOTAL ─────
+\subsubsection{Fuerza normal total y fuerza de fricción}
+\begin{equation}
+F_{\text{normal}} = 20\ \frac{\text{N}}{\text{grano}} \times 17\ \text{granos} = 340\ \text{N}
+\label{eq:Fnormal}
+\end{equation}
+
+Tomando un coeficiente de fricción $\mu = 0{,}5$ (valor de literatura):
+\begin{equation}
+F_{\text{fricción}} = \mu \cdot F_{\text{normal}} = 0{,}5 \times 340 = 170\ \text{N}
+\label{eq:Ffriccion}
+\end{equation}
+
+% ───── (D) TORQUE REQUERIDO POR RODILLO ─────
+\subsubsection{Torque requerido por rodillo}
+\begin{equation}
+T = F_{\text{fricción}} \cdot r = 170\ \text{N} \times 0{,}04\ \text{m} = 6{,}8\ \text{N}\!\cdot\!\text{m}
+\label{eq:torque}
+\end{equation}
+
+% ───── (E) VELOCIDADES ANGULARES ─────
+\subsubsection{Velocidades angulares}
+\begin{equation}
+\omega_{\text{rápido}} = \frac{V_{\text{rápido}}}{r} = \frac{5{,}236\ \text{m/s}}{0{,}04\ \text{m}} = 130{,}9\ \frac{\text{rad}}{\text{s}}
+\end{equation}
+\begin{equation}
+\omega_{\text{lento}} = \frac{V_{\text{lento}}}{r} = \frac{4{,}19\ \text{m/s}}{0{,}04\ \text{m}} = 104{,}75\ \frac{\text{rad}}{\text{s}}
+\end{equation}
+
+% ───── (F) POTENCIA REQUERIDA ─────
+\subsubsection{Potencia requerida en cada rodillo}
+\begin{equation}
+P_{\text{rápido}} = T \cdot \omega_{\text{rápido}} = 6{,}8 \times 130{,}9 = 890{,}12\ \text{W} = 0{,}89\ \text{kW}
+\label{eq:Prap}
+\end{equation}
+\begin{equation}
+P_{\text{lento}} = T \cdot \omega_{\text{lento}} = 6{,}8 \times 104{,}75 = 712{,}3\ \text{W} = 0{,}71\ \text{kW}
+\label{eq:Plento}
+\end{equation}
+
+% ───── (G) POTENCIA CON FACTOR DE SEGURIDAD ─────
+\subsubsection{Potencia del motor con factor de seguridad y eficiencia de transmisión}
+Se aplica un factor de seguridad $F_{s} = 1{,}5$ para arranques y picos de carga, y una eficiencia de transmisión $\eta = 0{,}9$:
+\begin{equation}
+P_{m,\,\text{rápido}} = \frac{P_{\text{rápido}} \cdot F_{s}}{\eta} = \frac{0{,}89 \times 1{,}5}{0{,}9} = 1{,}48\ \text{kW}
+\label{eq:Pm_rap}
+\end{equation}
+\begin{equation}
+P_{m,\,\text{lento}} = \frac{P_{\text{lento}} \cdot F_{s}}{\eta} = \frac{0{,}71 \times 1{,}5}{0{,}9} = 1{,}18\ \text{kW}
+\label{eq:Pm_lento}
+\end{equation}
+
+% ───────────────────────────────────────────
+\subsection{Capacidad del Sistema de Alimentación de Arroz}
+
+% ───── (A) FLUJO DESEADO ─────
+\subsubsection{Flujo másico de diseño}
+\begin{equation}
+C = 0{,}05 \times 0{,}0008 \times 5{,}236 \times 580 \times 0{,}6 = 0{,}073\ \frac{\text{kg}}{\text{s}} = 262{,}39\ \frac{\text{kg}}{\text{h}}
+\end{equation}
+
+% ───── (B) VOLUMEN DEL ALVÉOLO ─────
+\subsubsection{Volumen de cada alvéolo del rodillo alimentador}
+\begin{equation}
+V_{\text{alvéolo}} = \left(\tfrac{1}{2}\,\pi\, r_{\text{alvéolo}}^{2}\right) \cdot L_{\text{alimentación}}
+\label{eq:Valveolo}
+\end{equation}
+
+Con $r_{\text{alvéolo}} = 8\ \text{mm}$ y $L_{\text{alimentación}} = 50\ \text{mm}$:
+\begin{equation}
+V_{\text{alvéolo}} = \left(\tfrac{1}{2}\,\pi \times 8^{2}\right) \times 50 = 5026{,}55\ \text{mm}^{3}
+\end{equation}
+
+% ───── (C) ECUACIÓN DE CAPACIDAD ─────
+\subsubsection{Ecuación de capacidad del alimentador rotativo}
+\begin{equation}
+C\left[\tfrac{\text{g}}{\text{s}}\right] = \left(N_{\text{alvéolos}} \cdot V_{\text{alvéolo}} \cdot \eta_{\text{llenado}}\right) \cdot \omega_{\text{rps}} \cdot \rho_{\text{aparente}}
+\label{eq:Cap_alim}
+\end{equation}
+
+\noindent donde $\eta_{\text{llenado}}$ es la eficiencia de llenado del alvéolo y $\omega_{\text{rps}}$ la velocidad angular en revoluciones por segundo.
+
+% ───── (D) DETERMINACIÓN DE LA VELOCIDAD ─────
+\subsubsection{Determinación de la velocidad del rodillo alimentador}
+Adoptando $\eta_{\text{llenado}} = 0{,}7$ y $\rho_{\text{aparente}} = 0{,}00058\ \text{g/mm}^{3}$, con $N_{\text{alvéolos}} = 10$:
+\begin{equation}
+C = \left(10 \times 5026{,}55 \times 0{,}7\right) \cdot \omega_{\text{rps}} \cdot 0{,}00058
+\end{equation}
+\begin{equation}
+C = 20{,}41 \cdot \omega_{\text{rps}}
+\end{equation}
+
+Igualando con la capacidad de diseño $C = 73\ \text{g/s}$:
+\begin{equation}
+\omega_{\text{rps}} = \frac{73\ \text{g/s}}{20{,}41} = 3{,}58\ \text{rps} = 214{,}6\ \text{RPM}
+\label{eq:wrps}
+\end{equation}
+
+% ───────────────────────────────────────────
+\subsection{Resumen de Parámetros de Diseño}
+La Tabla~\ref{tab:diseno} consolida los principales valores obtenidos en el análisis de diseño mecánico.
+
+\begin{table}[h!]
+\centering
+\caption{Resumen de parámetros de diseño mecánico de la pulidora.}
+\label{tab:diseno}
+\renewcommand{\arraystretch}{1.2}
+\rowcolors{2}{gray!10}{white}
+\begin{tabular}{L{4.5cm} C{2.5cm}}
+\toprule
+\textbf{Parámetro} & \textbf{Valor} \\
+\midrule
+Presión máxima de contacto                         & $2{,}39$\,MPa \\
+Ancho de contacto real ($2a$)                      & $6{,}10$\,mm \\
+Ancho mínimo permisible                            & $1{,}46$\,mm \\
+Velocidad rodillo rápido                           & $5{,}236$\,m/s \\
+Velocidad rodillo lento                            & $4{,}19$\,m/s \\
+Longitud de los rodillos                           & $50$\,mm \\
+Capacidad de procesamiento                         & $262{,}39$\,kg/h \\
+Fuerza de operación por grano                      & $20$\,N \\
+Granos en contacto simultáneo                      & $17$ \\
+Fuerza normal total                                & $340$\,N \\
+Fuerza de fricción                                 & $170$\,N \\
+Torque por rodillo                                 & $6{,}8$\,N\,m \\
+Potencia del motor (rodillo rápido)                & $1{,}48$\,kW \\
+Potencia del motor (rodillo lento)                 & $1{,}18$\,kW \\
+Velocidad del rodillo alimentador                  & $214{,}6$\,RPM \\
+\bottomrule
+\end{tabular}
+\end{table}
