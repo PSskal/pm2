@@ -1,5 +1,5 @@
 # Fdb version 3
-["pdflatex"] 1777093246 "formulas_wrapper.tex" "formulas_wrapper.pdf" "formulas_wrapper" 1777093247
+["pdflatex"] 1779506123 "/home/psskal/pm2/formulas_wrapper.tex" "formulas_wrapper.pdf" "formulas_wrapper" 1779506124
   "/etc/texmf/web2c/texmf.cnf" 1760236812 475 c0e671620eb5563b2130f56340a5fde8 ""
   "/home/psskal/.texlive2021/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1200.600pk" 1764554311 31928 4f48ff23aaefb446f821003ff13444b0 ""
   "/home/psskal/.texlive2021/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1440.600pk" 1764554312 40112 51afff9ed62a3b3e81fe362eedd8ba10 ""
@@ -7,6 +7,7 @@
   "/home/psskal/.texlive2021/texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm0800.600pk" 1764554309 19056 53f1fc0e472d73ffebf06a0725036ba3 ""
   "/home/psskal/.texlive2021/texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1200.600pk" 1764554311 28416 57e721b854fab501260ec2678e94b685 ""
   "/home/psskal/.texlive2021/texmf-var/fonts/pk/ljfour/jknappen/ec/ecti1200.600pk" 1764554310 39096 f498d2240d2bb4361b65d83fc925176a ""
+  "/home/psskal/pm2/formulas_wrapper.tex" 1777093269 519 b734884c3068461680e969e2def5ed3a ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/jknappen/ec/ecbx1200.tfm" 1136768653 3584 402da0b29eafbad07963b1224b222f18 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/jknappen/ec/ecbx1440.tfm" 1136768653 3584 13049b61b922a28b158a38aeff75ee9b ""
@@ -79,9 +80,9 @@
   "/usr/share/texmf/web2c/texmf.cnf" 1644012257 39432 7155514e09a3d69036fac785183a21c2 ""
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1760237850 165012 f177baa1c39a3ebd62c3096a43521a0d ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1777091175 1456636 68e51307aa38e5cb91daca11f759418f ""
-  "formulas.tex" 1777092955 13771 cad3d2835a75bb6fc5d375c8d21caea7 ""
-  "formulas_wrapper.aux" 1777093247 4596 6ac64ccf98471f8fbe0efcbc18260a43 "pdflatex"
-  "formulas_wrapper.tex" 1777093236 519 b734884c3068461680e969e2def5ed3a ""
+  "formulas.tex" 1779506123 13771 cad3d2835a75bb6fc5d375c8d21caea7 ""
+  "formulas_wrapper.aux" 1779506124 4596 6ac64ccf98471f8fbe0efcbc18260a43 "pdflatex"
+  "formulas_wrapper.tex" 1777093269 519 b734884c3068461680e969e2def5ed3a ""
   (generated)
   "formulas_wrapper.aux"
   "formulas_wrapper.log"
